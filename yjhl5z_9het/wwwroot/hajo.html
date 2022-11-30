@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div id="külső">
+        <div id="kérdés_szöveg">
+            Kérdés szövege
+        </div>
+
+        <div id="középső">
+            <div id="válaszok">
+                <div id="válasz1" class="kerdes">Válasz 1</div>
+                <div id="válasz2" class="kerdes">Válasz 2</div>
+                <div id="válasz3" class="kerdes">Válasz 3</div>
+            </div>
+
+            <div id="kép">
+                <img id="kép1" src="https://kzgzdiag426.blob.core.windows.net/netcore/teszt-0050.jpg" />
+            </div>
+        </div>
+        <div id="vezérlő">
+            <div class="gomb kattintható">Vissza</div>
+            <div class="gomb kattintható">Előre</div>
+        </div>
+    </div>
+    <style>
+        div{
+            margin:10px;
+            border: 1px solid fuchsia;
+        }
+        #külső {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        #vezérlő {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        #válaszok {
+            flex-grow: 1;
+            flex-shrink: 1;
+        }
+        #középső {
+            display: flex;
+            flex-direction: row;
+            flex-grow: 1;
+        }
+        #kép {
+            overflow: hidden;
+            flex-shrink:0;
+        }
+        #kérdés_szöveg {
+            font-family: Arial;
+            margin:10px;
+            border: 1px solid black;
+
+        }
+        html, body {
+            height: 100%;
+        }
+        .gomb {
+            padding: 20px;
+            width: 80px;
+        }
+        .kattintható:hover {
+            background-color: fuchsia;
+            color: white;
+        }
+
+        .kerdes {
+            font-family:'Times New Roman';
+            font-size:13px;
+            margin:5px;
+            border : 1px solid black;
+        }
+
+
+    </style>
+</body>
+<</html>
