@@ -1,5 +1,6 @@
 ﻿
 function kérdésMegjelenítés(kérdés) {
+    let kérdés = hotList[displayedQuestion].question;
     console.log(kérdés);
     document.getElementById("kérdés_szöveg").innerText = kérdés.questionText
     document.getElementById("válasz1").innerText = kérdés.answer1
@@ -8,18 +9,29 @@ function kérdésMegjelenítés(kérdés) {
     document.getElementById("kép").src = "https://szoft1.comeback.hu/hajo/" + kérdés.image;
 
 }
-function kérdésBetöltés(id) {
-            fetch(`/questions/${id}`)
-                .then(response => {
-                    if (!response.ok) {
-                        console.error(`Hibás válasz: ${response.status}`)                        
-                    }
-                    else {
-                        return response.json()
-                    }
-                })
-                .then(data => kérdésMegjelenítés(data));                
-}  
+function kérdésBetöltés(questionNumber, destination) {
+    fetch(`/questions/${questionNumber}`)
+        .then(
+            result => {
+                if (!result.ok) {
+                    console.error(`Hibás letöltés: ${response.status}`)
+                }
+                else {
+                    return result.json()
+                }
+            }
+        )
+        .then(
+            q => {
+                hotList[destination].question = q;
+                hotList[destination].goodAnswers = 0;
+                console.log(`A ${questionNumber}. kérdés letöltve a hot list ${destination}. helyére`)
+                if (displayedQuestion == undefined && destination == 0) { 
+                    displayedQuestion = 0;
+                    kérdésMegjelenítés();
+            }
+        );
+}
 function válaszfeldolgozás(válasz) {
     if (!válasz.ok) {
         console.error(`Hibás válasz: ${response.status}`)
@@ -29,8 +41,10 @@ function válaszfeldolgozás(válasz) {
     }
 }
 function előre() {
-    questionId++;
-    kérdésBetöltés(questionId)
+    clearTimeout(timeoutHandler)
+    displayedQuestion++;
+    if (displayedQuestion == questionsInHotList) displayedQuestion = 0;
+    kérdésMegjelenítés()
 }
 
 function vissza() {
@@ -50,5 +64,19 @@ function választás(n) {
     }
     else {
         document.getElementById(`válasz${jóVálasz}`).classList.add("jó");
+    }
+}
+function init() {
+    for (var i = 0; i < questionsInHotList; i++) {
+        let q = {
+            question: {},
+            goodAnswers: 0
+        }
+        hotList[i] = q;
+    }
+
+    for (var i = 0; i < questionsInHotList; i++) {
+        kérdésBetöltés(nextQuestion, i);
+        nextQuestion++;
     }
 }

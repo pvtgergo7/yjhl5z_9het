@@ -30,5 +30,14 @@ namespace yjhl5z_9het.Controllers
 
             return new JsonResult(kérdés);
         }
+        [HttpGet]
+        [Route("questions/count")]
+        public int M4() //Tetszőleges metódusnév
+        {
+            HajosContext context = new HajosContext();
+            int kérdésekSzáma = context.Questions.Count();
+
+            return kérdésekSzáma;
+        }
     }
 }
